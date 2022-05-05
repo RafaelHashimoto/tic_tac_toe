@@ -6,10 +6,7 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   print:
-    - checkout
-    - run:
-      command: |
-        echo $PRINTABLE_ENV_VAR
+    - run: "echo $PRINTABLE_ENV_VAR"
   front-end:
     docker:
       - image: hashimotorafa/tic_tac_toe-front_end
@@ -18,8 +15,8 @@ jobs:
           password: $DOCKER_REGISTRY_PASSWORD
     steps:
       - setup_remote_docker:
-        version: 20.10.14
-        docker_layer_caching: true
+          version: 20.10.12
+          docker_layer_caching: true
 
 workflows:
   tic-tac-toe:
