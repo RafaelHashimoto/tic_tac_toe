@@ -40,4 +40,4 @@ workflows:
       - save_print_output
       - print_output_file:
           requires:
-            - save_hello_world_output
+            - save_print_output
