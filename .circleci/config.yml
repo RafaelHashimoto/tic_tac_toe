@@ -5,26 +5,35 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  print:
+  print_output_file:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: |
+            cat output.txt
+  save_print_output:
     docker:
       - image: cimg/base:2020.01
     steps:
       - checkout
       - run:
-          name: echo an env var that is part of our project
           command: |
-            echo $PRINTABLE_ENV_VAR
-            echo 'LALALALAL'
-  # front-end:
-  #   docker:
-  #     - image: hashimotorafa/tic_tac_toe-front_end
-  #       auth:
-  #         username: hashimotorafa
-  #         password: $DOCKER_REGISTRY_PASSWORD
-  #   steps:
-  #     - setup_remote_docker:
-  #         version: 20.10.12
-  #         docker_layer_caching: true
+            echo $PRINTABLE_ENV_VAR > output.txt
+      - persist_to_workspace:
+          root: .
+  front-end:
+    docker:
+      - image: hashimotorafa/tic_tac_toe-front_end
+        auth:
+          username: hashimotorafa
+          password: $DOCKER_REGISTRY_PASSWORD
+    steps:
+      - setup_remote_docker:
+          version: 20.10.12
+          docker_layer_caching: true
 workflows:
   tic-tac-toe:
     jobs:
