@@ -5,15 +5,6 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  print_output_file:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          command: |
-            cat output.txt
   save_print_output:
     docker:
       - image: cimg/base:2020.01
@@ -24,6 +15,15 @@ jobs:
             echo $PRINTABLE_ENV_VAR > output.txt
       - persist_to_workspace:
           root: .
+  print_output_file:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          command: |
+            cat output.txt
   front-end:
     docker:
       - image: hashimotorafa/tic_tac_toe-front_end
@@ -37,4 +37,5 @@ jobs:
 workflows:
   tic-tac-toe:
     jobs:
-      - print
+      - save_print_output
+      - print_output_file
