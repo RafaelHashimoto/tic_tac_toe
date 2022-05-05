@@ -12,9 +12,11 @@ jobs:
       - checkout
       - run:
           command: |
-            echo $PRINTABLE_ENV_VAR > output.txt
+            echo $PRINTABLE_ENV_VAR > tmp/output.txt
       - persist_to_workspace:
           root: .
+          paths: 
+            - tmp
   print_output_file:
     docker:
       - image: cimg/base:2020.01
@@ -23,7 +25,7 @@ jobs:
           at: .
       - run:
           command: |
-            cat output.txt
+            cat tmp/output.txt
   front-end:
     docker:
       - image: hashimotorafa/tic_tac_toe-front_end
