@@ -23,9 +23,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run:
-          command: |
-            cat ~/output.txt
+      - run: cat ~/output.txt
   front-end:
     docker:
       - image: hashimotorafa/tic_tac_toe-front_end
@@ -40,4 +38,6 @@ workflows:
   tic-tac-toe:
     jobs:
       - save_print_output
-      - print_output_file
+      - print_output_file:
+          requires:
+            - save_hello_world_output
