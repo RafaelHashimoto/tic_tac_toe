@@ -6,10 +6,10 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   print:
-      - checkout
-      - run:
+    - checkout
+    - run:
       command: |
-            echo $PRINTABLE_ENV_VAR
+        echo $PRINTABLE_ENV_VAR
   front-end:
     docker:
       - image: hashimotorafa/tic_tac_toe-front_end
