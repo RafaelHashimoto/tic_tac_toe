@@ -9,7 +9,10 @@ jobs:
     - docker:
         - image: cimg/base:2020.01
     - steps:
-        - run: echo $PRINTABLE_ENV_VAR
+        - run:
+          name: "echo an env var that is part of our project"
+          command: |
+            echo $PRINTABLE_ENV_VAR
   # front-end:
   #   docker:
   #     - image: hashimotorafa/tic_tac_toe-front_end
