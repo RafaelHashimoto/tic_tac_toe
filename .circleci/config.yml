@@ -2,49 +2,45 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-commands:
-  print_pipeline_id:
-    - run:
-      command: |
-        echo $CIRCLE_WORKFLOW_ID
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  save_print_output:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - checkout
-      - print_pipeline_id
-      - run:
-          command: |
-            echo $PRINTABLE_ENV_VAR > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-  print_output_file:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - attach_workspace:
-          at: ~/
-      - print_pipeline_id
-      - run: cat ~/output.txt
-  front-end:
+  front-end-build:
     docker:
       - image: hashimotorafa/tic_tac_toe-front_end
         auth:
           username: hashimotorafa
           password: $DOCKER_REGISTRY_PASSWORD
     steps:
-      - setup_remote_docker:
-          version: 20.10.12
-          docker_layer_caching: true
+      - checkout
+      - run: npm i
+      - run: npm run lint
+  front-end-test:
+    docker:
+      - image: hashimotorafa/tic_tac_toe-front_end
+        auth:
+          username: hashimotorafa
+          password: $DOCKER_REGISTRY_PASSWORD
+    steps:
+      - checkout
+      - run: npm i
+      - run: npm run test
+  front-end-audit:
+    docker:
+      - image: hashimotorafa/tic_tac_toe-front_end
+        auth:
+          username: hashimotorafa
+          password: $DOCKER_REGISTRY_PASSWORD
+    steps:
+      - checkout
+      - run: npm audit
 workflows:
   tic-tac-toe:
     jobs:
-      - save_print_output
-      - print_output_file:
+      - front-end-build
+      - front-end-test:
           requires:
-            - save_print_output
+            - front-end-build
+      - front-end-audit:
+          requires:
+            - front-end-test
