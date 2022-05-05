@@ -14,6 +14,7 @@ jobs:
           name: echo an env var that is part of our project
           command: |
             echo $PRINTABLE_ENV_VAR
+            echo 'LALALALAL'
   # front-end:
   #   docker:
   #     - image: hashimotorafa/tic_tac_toe-front_end
