@@ -2,6 +2,11 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+commands:
+  print_pipeline_id:
+    - run:
+      command: |
+        echo $CIRCLE_WORKFLOW_ID
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -10,6 +15,7 @@ jobs:
       - image: cimg/base:2020.01
     steps:
       - checkout
+      - print_pipeline_id
       - run:
           command: |
             echo $PRINTABLE_ENV_VAR > ~/output.txt
@@ -23,6 +29,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
+      - print_pipeline_id
       - run: cat ~/output.txt
   front-end:
     docker:
