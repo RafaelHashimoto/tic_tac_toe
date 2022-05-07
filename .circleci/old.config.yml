@@ -10,7 +10,7 @@ jobs:
       - image: hashimotorafa/tic_tac_toe-front_end:latest
         auth:
           username: hashimotorafa
-          password: Bl4ckrebel
+          password: $DOCKER_REGISTRY_PASSWORD
     steps:
       - checkout
       - run: npm i

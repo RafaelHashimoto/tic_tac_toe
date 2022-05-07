@@ -6,7 +6,7 @@ Resources:
     Properties:
       SecurityGroups:
         - !Ref InstanceSecurityGroup
-      KeyName: TicTacToe
+      KeyName: udacity-ansible
       ImageId: "ami-09d56f8956ab235b3"
       InstanceType: t3.micro
   InstanceSecurityGroup:
