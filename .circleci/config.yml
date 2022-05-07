@@ -16,7 +16,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .cloudformation/template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name tic-tac-toe-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
 # Sequential workflow
 workflows:
