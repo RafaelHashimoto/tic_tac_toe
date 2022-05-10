@@ -28,6 +28,17 @@ jobs:
           # You can get this ID in the section where you registered the SSH Key
           fingerprints: ["99:73:3a:67:91:76:d8:07:6a:17:5c:d6:9d:9c:73:77"]
       - run:
+          name: Install APK (Alpine Package Keepe)
+          command: |
+            apk update
+            apk add --no-cache bash
+      - run:
+          name: Set Bash as Default Shell
+          command: |
+            apk add --no-cache shadow
+            chsh -s /bin/bash
+            exec /bin/bash
+      - run:
           name: Install Ansible
           command: |
             apk add --update ansible
