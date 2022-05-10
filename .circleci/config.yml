@@ -9,10 +9,10 @@ commands:
   destroy_environment:
     steps:
       - run:
-        name: Destroy Environment
-        when: on_fail
-        command: |
-          aws cloudformation delete-stack --stack-name tic-tac-toe-${CIRCLE_WORKFLOW_ID}
+          name: Destroy Environment
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name tic-tac-toe-${CIRCLE_WORKFLOW_ID}
 
 jobs:
   # Exercise: Config and Deployment
@@ -61,8 +61,8 @@ workflows:
     jobs:
       - create_infrastructure
       - configure_infrastructure:
-        requires:
-          - create_infrastructure
+          requires:
+            - create_infrastructure
       - smoke_test:
-        requires:
-          - configure_infrastructure
+          requires:
+            - configure_infrastructure
