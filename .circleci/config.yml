@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook -i inventory.txt playbook.yml
+            ansible-playbook -i inventory.txt .ansible/playbook.yml
   smoke_test:
     docker:
       - image: alpine:latest
@@ -58,3 +58,4 @@ workflows:
     jobs:
       - create_infrastructure
       - configure_infrastructure
+      - smoke_test
